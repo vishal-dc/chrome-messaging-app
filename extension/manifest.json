@@ -10,20 +10,24 @@
     "default_popup": "index.html"
   },
   "background": {
-    "scripts": ["eventPage.js"],
+    "scripts": ["utils.js", "eventPage.js"],
     "persistent": false
   },
     
 "content_scripts": [
     {
       "matches": ["http://localhost/*","http://localhost:7001/*"],
-      "js": ["libs/jquery/jquery-1.12.4.js", "domReader.js"]
+        
+      "js": ["utils.js",
+             "libs/jquery/jquery-1.12.4.js",
+             "domReader.js"]
     }
   ],
     
-  "permissions": ["notifications", 
-                  "management",
-                 "tabs"]
+  "permissions": [  "notifications", 
+                    "management",
+                    "tabs",
+                    "storage"]
   
 
 }

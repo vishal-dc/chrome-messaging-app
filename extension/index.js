@@ -29,7 +29,7 @@ function BridgeFe(scope, appService){
     };
     
     this.openIppTrainerApp = function(){
-        var app = appService.getAppByName('IPP Trainer Application');
+        var app = appService.getAppByName('Trainer Application');
         if(app)
             this.openApp(app.id);
         else

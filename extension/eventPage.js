@@ -20,7 +20,7 @@ chrome.runtime.onConnect.addListener(function(port) {
   console.assert(port.name == "knockknock");
   port.onMessage.addListener(function(msg) {
           var reply; 
-  
+        var js=[];
     if (msg.joke == "Knock knock"){
         reply = {question: "Who's there?"};
         console.log(reply);
@@ -38,6 +38,16 @@ chrome.runtime.onConnect.addListener(function(port) {
     
     
     }
+        utils.set(msg.joke || msg.answer,reply);
+      
+        js.push(msg.joke || msg.answer);
+      
+        utils.get(js, function(items){
+            for(var item in items){
+                console.log(item);
+            }
+    });
       
   });
 });
+
