@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Messaging Bridge",
+  "version": "0.1",
+  "description": "This sample shows how to communicate between two apps or one app and one extension.",
+    
+  "browser_action": {
+    "default_title": "Send message to trainer app",
+    "default_icon": "icon_16.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
+  },
+    
+"content_scripts": [
+    {
+      "matches": ["http://localhost/*","http://localhost:7001/*"],
+      "js": ["libs/jquery/jquery-1.12.4.js", "domReader.js"]
+    }
+  ],
+    
+  "permissions": ["notifications", 
+                  "management",
+                 "tabs"]
+  
+
+}

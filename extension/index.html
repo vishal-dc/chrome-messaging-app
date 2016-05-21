@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="bridgeApp">
+<head>
+    <meta charset="utf-8">
+<!--    <link href="main.css" rel="stylesheet">-->
+    <!--Import Google Icon Font-->
+    
+    <link type="text/css" href="materialize/icon.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+</head>
+<body ng-controller="BridgeFe as ctrl" style="width:500px">
+    <h5>Waiting for messages</h5>
+<!--    <label>my extension ID is <input id="appid" type="text"  readonly></input></label>-->
+    
+<!--    <label>Open extension ID is <input type="text" ng-model="ctrl.appId"></input></label>-->
+
+
+     <ul class="collection">
+      <li class="collection-item" ng-repeat="message in ctrl.messages">{{message}} </li>
+    </ul>
+<!--
+    <div id="appLog">
+        <li ng-repeat="app in ctrl.appList">{{app.name}} || {{app.id}} </li>            
+    </div>
+-->
+    <a class="waves-effect waves-light btn" ng-click="ctrl.send()">Send</a>
+<!--     <button id="send" ng-click="ctrl.send()">Send</button>-->
+<!--     <button id="send" ng-click="ctrl.getApps()">Get Apps</button>-->
+    <a class="waves-effect waves-light btn" ng-click="ctrl.openIppTrainerApp()">Open IPP Trainer</a>
+    
+<!--     <button id="send" ng-click="ctrl.openIppTrainerApp()">Open IPP Trainer</button>-->
+    <div>
+<!--
+        <label for="sendText">Send message:</label>
+      <input id="sendText" type="text"></input>
+      <label for="sendId">to application ID </label>
+      <input id="sendId" type="text"></input>
+-->
+<!--      <button id="send">Send</button>-->
+    </div>
+    <script src="libs/angular-1.5.5/angular.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
