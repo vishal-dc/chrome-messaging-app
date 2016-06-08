@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="trainerApp">
+<head>
+    <meta charset="utf-8">
+   <!--    <link href="main.css" rel="stylesheet">-->
+    <!--Import Google Icon Font-->
+    
+    <link type="text/css" href="materialize/icon.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+</head>
+<body ng-controller="tainerCtrl as ctrl">
+    <h5>Welcome to your training.</h5>
+    <h5>You are.</h5>
+    <label>my Application ID is <input id="appid" type="text"  readonly></input></label>
+    
+    <div>
+        <label for="sendText">Send message:</label>
+        <input id="sendText" type="text"></input>
+        <label for="sendId">to application ID </label>
+        <input id="sendId" type="text"></input>
+        <a class="waves-effect waves-light btn red" ng-click="ctrl.send()">Send</a>
+    </div>
+    <div id="log"></div>
+   <script src="libs/angular-1.5.5/angular.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
