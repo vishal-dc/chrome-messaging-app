@@ -10,13 +10,19 @@
     "default_popup": "index.html"
   },
   "background": {
-    "scripts": ["utils.js", "eventPage.js"],
+    "scripts": [ "libs/jquery/jquery-1.12.4.js",
+                 "utils.js",
+                 "eventPage.js"],
+      
     "persistent": false
   },
     
 "content_scripts": [
     {
-      "matches": ["http://localhost/*","http://localhost:7001/*"],
+      "matches": [
+                    "http://localhost/*",
+                    "http://localhost:*/*"
+                 ],
         
       "js": ["utils.js",
              "libs/jquery/jquery-1.12.4.js",

@@ -6,6 +6,38 @@
 
 console.log("initializing DomReaderJs!");
 
+
+// check jquery
+(function(){
+    
+if(!window.jQuery){
+    throw new Error("Jquery not defined");
+}
+    
+$( document ).ready(initReader);
+
+function initReader(){
+    var msgId = 0;
+    var port = chrome.runtime.connect({name: "knockknock"});
+   
+    
+    port.onMessage.addListener(function(msg) {
+        console.log("message received:", msg);
+    });
+    
+    $("body").click(function(event){
+        
+        utils.set(utils.getKey(keyPref, utils.getNextReaderId), {name:"click", target: event.target});      
+        //utils.postMessage(port, {name:"click", target: event.target});      
+        
+    });
+}
+})();
+
+
+
+
+/*
 var port = chrome.runtime.connect({name: "knockknock"});
 port.postMessage({joke: "Knock knock"});
 port.onMessage.addListener(function(msg) {
@@ -33,5 +65,7 @@ port.onMessage.addListener(function(msg) {
     });
     
 });
-
+*/
 //start
+
+

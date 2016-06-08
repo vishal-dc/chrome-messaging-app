@@ -2,7 +2,12 @@ var bridgeApp = angular.module('bridgeApp', []);
 
 function BridgeFe(scope, appService){
     var ctrl = this;
-    this.messages = ['heello', 'hell'];
+    
+//    this.messages = ['heello', 'hell'];
+    
+    var backWindow = chrome.extension.getBackgroundPage();
+    
+    this.messages = backWindow.messages;
     
     //this.appId = '';
     

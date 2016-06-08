@@ -1,13 +1,28 @@
+(function(window, $){
+    
+function noop(){};
 /**
 Utility to store to the local storage
 **/
 var utils = {};
+window.utils = utils;
+var readerId = 0,
+    appId = 0,
+    extId = 0,
+    readerPrefix = 'reader.',
+    extPrefix = 'extension.',
+    appPrefix = 'app.';
+    
+//utils.getNextReaderId = function(){return readerId++};
+//utils.getNextAppId = function(){return appId++};
+//utils.getNextExtId = function(){return extId++};    
+//utils.getKey = function(prefix, id){return prefix+'.'+ id};
 
 utils.set = function(key, value, callback){
     
     chrome.storage.local.set({key:value},function(){
-       console.log("saved",key) ;
-        return callback ? callback():false;        
+        console.log("saved",key) ;
+        (callback || noop)(items);
     });
         
 };
@@ -15,8 +30,17 @@ utils.set = function(key, value, callback){
 utils.get = function(keys, callback){
         
     chrome.storage.local.get(js, function(items){
-          return callback ? callback(items):false;        
+            (callback || noop)(items);          
     });
         
 };
 
+    
+utis.setReader = function()
+    
+utils.postMessage = function(port, msg){
+      port.postMessage(msg);
+    //
+};
+    
+})(window, jQuery);

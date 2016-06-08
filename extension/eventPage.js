@@ -14,7 +14,33 @@
 //    }
 //  });
 //
+console.log("initializing event page..");
 
+
+
+(function initEventPage(window){
+    var messages = [];
+    window.trainer = {};
+    window.trainer.messages = messages;
+    
+    chrome.runtime.onConnect.addListener(function(port) {
+        console.assert(port.name == "knockknock");
+        port.onMessage.addListener(function(msg, sender) {
+            if(msg.name ==='click')
+                messages.push(msg);
+            else
+                console("Don't recognize event: ", msg);
+            
+            messages.forEach(function(msg){
+                console.log(msg);
+            })
+        });
+    });
+})(window);
+
+                               
+
+/*
 chrome.runtime.onConnect.addListener(function(port) {
     //alert("hi");
   console.assert(port.name == "knockknock");
@@ -50,4 +76,4 @@ chrome.runtime.onConnect.addListener(function(port) {
       
   });
 });
-
+*/
