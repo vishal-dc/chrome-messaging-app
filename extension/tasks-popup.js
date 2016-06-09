@@ -17,11 +17,40 @@
 
 			console.log(data);
 
-			$($.parseHTML(data)).appendTo('body');		
+			$($.parseHTML(data)).appendTo('body');	
+    
+      initHandlers();
 
 
 		});
 	}
+    
+    function initHandlers(){
+        $('#popup #min').click(function(){
+
+            
+              $('#popup .card').hide(500);
+             $('#popup #expand').show();
+            $('#popup #min').hide();
+            
+        });
+        
+         $('#popup #expand').click(function(){
+
+            
+              $('#popup .card').show(500);
+              $('#popup #min').show();
+             $('#popup #expand').hide();
+            
+        }); 
+        
+        $('#popup #hint').click(function(){
+           console.log("hinting..") ;
+        });
+
+        
+
+    }
 	
 	function showWindow(){
 		$('.tasks-popup').show(500);
@@ -81,13 +110,14 @@
 	
 	global.setTimeout(function(){
 		tasks.showWindow();	
-		tasks.addTasks(listOfTasks);
-		global.setTimeout(function(){
-			tasks.hideWindow();
-
-		},20000);//hide
+	//	tasks.addTasks(listOfTasks);
+      
+//		global.setTimeout(function(){
+//			tasks.hideWindow();
+//
+//		},20000);//hide
 		
-	},5000)//show;
+	},2000)//show;
 	
 	
 

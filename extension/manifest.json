@@ -27,12 +27,13 @@
       "js": [
 					"utils.js",
           "libs/jquery/jquery-1.12.4.js",
-          "domReader.js",
+          //"domReader.js",
 					"tasks-popup.js"
 			],
 			
 			"css": [
 					"tasks-popup.css"
+          //"materialize/css/materialize.css"
 				]
       
     }
