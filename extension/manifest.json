@@ -24,10 +24,28 @@
                     "http://localhost:*/*"
                  ],
         
-      "js": ["utils.js",
-             "libs/jquery/jquery-1.12.4.js",
-             "domReader.js"]
+      "js": [
+					"utils.js",
+          "libs/jquery/jquery-1.12.4.js",
+          "domReader.js",
+					"tasks-popup.js"
+			],
+			
+			"css": [
+					"tasks-popup.css"
+				]
+      
     }
+  ],
+	
+	 "web_accessible_resources": [
+			"images/*.png",
+			"**/*.css",
+			"script/double-rainbow.js",
+			"script/main.js",
+			"templates/*",
+		 	"**/*.html",
+		  "*.html"
   ],
     
   "permissions": [  "notifications", 

@@ -36,11 +36,10 @@ utils.get = function(keys, callback){
 };
 
     
-utis.setReader = function()
-    
+   
 utils.postMessage = function(port, msg){
       port.postMessage(msg);
     //
 };
     
-})(window, jQuery);
+})(window);
