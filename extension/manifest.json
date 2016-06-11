@@ -42,13 +42,14 @@
   ],
 	
 	 "web_accessible_resources": [
-			"images/*.png",
-			"**/*.css",
-			"script/double-rainbow.js",
-			"script/main.js",
-			"templates/*",
-		 	"**/*.html",
-		  "*.html"
+			 "images/*.png",
+			 "**/*.css",
+			 "script/double-rainbow.js",
+			 "script/main.js",
+			 "templates/*",
+		 	 "**/*.html",
+		   "*.html",
+       "*.gif"
   ],
     
   "permissions": [  "notifications", 

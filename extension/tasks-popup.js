@@ -9,7 +9,7 @@
     /** Constants */
     var ANIMATE_DELAY = 500, //500ms
         POPUP_MIN_HEIGHT = '20px',
-        POPUP_MAX_HEIGHT = '250px';
+        POPUP_MAX_HEIGHT = '200px';
     
 		var tasksArray = [];
     var taskCounter = 0;
@@ -31,7 +31,25 @@
 
 											
                 });
-        }
+              $.get(chrome.extension.getURL('/hint-popup.html'), 
+                  function(data) {
+
+//								  console.log(data);
+
+                    $($.parseHTML(data)).appendTo('body');	
+                    $('#hintWindow #close').click(function(){
+                        $('#hintWindow').fadeOut(ANIMATE_DELAY);
+                        $('#blur').fadeOut(ANIMATE_DELAY/2);
+                    });
+
+							
+                });
+        };
+    
+        function getGif(gif){
+            return chrome.extension.getURL('/'+gif);
+        };
+    
 				function refreshTasks(){            
             $('#popup .first-card').css("background", "green").fadeOut(ANIMATE_DELAY, function() {
                 var height = $(this).height();  
@@ -48,20 +66,29 @@
                  );// end animate                 
                   
              });
-            var secondCard = $('<div class="card opaque-0"><p class="light">'+nextTask().text+'</p></div>');
+            var secondCard = $('<div class="card opaque-0"><p  class="light">'+nextTask().text+'</p></div>');
             $('#popup').append(secondCard);
-            secondCard.switchClass("opaque-0",  "second-card", 4*ANIMATE_DELAY); 
+            secondCard.switchClass("opaque-0", "second-card", 3.5*ANIMATE_DELAY); 
            
 				};
     
-        
+        function showHint(){
+            var task = getCurrentTask();     
+            $('#hintWindow img').attr('src', getGif((task.hint || 'dummy.gif')));    
+            
+            $('#hintWindow').fadeIn(ANIMATE_DELAY);
+            $('#blur').fadeIn(ANIMATE_DELAY/2);
+            
+        };
+    
+        function getCurrentTask(){
+            return tasksArray[taskCounter];
+        }
     
         function nextTask(){
             taskCounter = (taskCounter === tasksArray.length-1? 0 : ++taskCounter);
-            console.log(taskCounter);
-            console.log(tasksArray[taskCounter]);
             return tasksArray[taskCounter];
-        }
+        };
     
         function initHandlers(){
             $('#popup #min').click(function(){
@@ -75,21 +102,23 @@
 					 	$('#popup #refresh').click(refreshTasks); 
 
             $('#popup #hint').click(function(){
+               showHint();
                console.log("hinting..") ;
             });
 
-        }
+        };
 
         function restoreButtons(){
             $('#popup #min').show();
             $('#popup #expand').hide();
             $('#popup #refresh').show();
-        }
+        };
+    
         function showWindow(){
             var popup = $('#popup');
             $('#popup').animate({
                                 height: POPUP_MAX_HEIGHT
-                            }, ANIMATE_DELAY/2);
+                            }, ANIMATE_DELAY);
             if(popup.is(':visible')){
                 $('#popup .card').show(ANIMATE_DELAY, function(){
                     restoreButtons();
