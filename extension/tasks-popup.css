@@ -39,10 +39,13 @@ i:hover{
     z-index: 9999;    
 /*    pointer-events: none;*/
 }
-.hint-popup .image-container{
-    border-radius: 5px;
+.image-container {
     padding: 10px;
-    border: 2px black;
+}
+
+.image-container > img{
+    border-radius: 8px;
+    border: 2px grey black;
 }
 .background-blur{
 /*    display: none;*/
