@@ -37,9 +37,11 @@
 //								  console.log(data);
 
                     $($.parseHTML(data)).appendTo('body');	
+                    
+                    $('#hintWindowContainer').hide();
+                  
                     $('#hintWindow #close').click(function(){
-                        $('#hintWindow').fadeOut(ANIMATE_DELAY);
-                        $('#blur').fadeOut(ANIMATE_DELAY/2);
+                        $('#hintWindowContainer').fadeOut(ANIMATE_DELAY/2);
                     });
 
 							
@@ -76,8 +78,8 @@
             var task = getCurrentTask();     
             $('#hintWindow img').attr('src', getGif((task.hint || 'dummy.gif')));    
             
-            $('#hintWindow').fadeIn(ANIMATE_DELAY);
-            $('#blur').fadeIn(ANIMATE_DELAY/2);
+            //$('#hintWindow').fadeIn(ANIMATE_DELAY);
+            $('#hintWindowContainer').fadeIn(ANIMATE_DELAY/2);
             
         };
     
