@@ -38,19 +38,27 @@ body
 }
 #popup > .first-card{
     font-size: 1.6em;     
+    opacity: 1;     
+/*
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+*/
 }
 
+.opaque-0{
+    opacity: 0;
+}
 #popup > .second-card{
     font-size: 0.7em;        
     opacity: 0.7;        
+/*
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+*/
 }
 
 .tasks-popup .popup-head{
