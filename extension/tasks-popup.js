@@ -90,8 +90,6 @@
         function showHint(){
             var task = getCurrentTask();     
             $('#hintWindow img').attr('src', getGif((task.hint.path || 'dummy.gif')));    
-            
-            //$('#hintWindow').fadeIn(ANIMATE_DELAY);
             $('#hintWindowContainer').fadeIn(ANIMATE_DELAY/2);
             
         };
@@ -128,11 +126,7 @@
             });
             
             $('#popup #win').click(function(){
-                //showCompletionPopup('winner-number-1.jpg');
-                //showCompletionPopup('golden-cup.gif');
-                showCompletionPopup('breaking-bad.gif');
-                
-                
+                showCompletionPopup();                
             });
             
 
@@ -196,16 +190,32 @@
             taskCounter = 0;
         }
     
-        function showCompletionPopup(image){
-            $('#completionContainer img').attr('src', getGif((image || 'breaking-bad.gif'))); 
+        function showCompletionPopup(result){
+               
+                
+                
+            var results = global.game.completionResults();
+            var level = results.level;
+            var image = results.image;
+            
+            $('#completionContainer img').attr('src', getGif((image || 'thumbs-up.jpg'))); 
             
             $('#completionContainer').fadeIn(ANIMATE_DELAY/2, function(){
                 $('#completionWindow').show();
                 $('#completionContainer .image-container').effect("pulsate").effect('shake');
+                
+                $('#completionWindow .stars-container i')
+                    .switchClass('fa-star', 'fa-star-o', ANIMATE_DELAY/2).delay(ANIMATE_DELAY)
+                    .filter(function(index){ 
+                        return index < level;
+                    }).switchClass('fa-star-o', 'fa-star', ANIMATE_DELAY*8);
+                
             });
         };
     
-        function hideCompletion(){            
+        function hideCompletion(){     
+            var task = getCurrentTask();
+            
             $('#completionWindow').hide("explode", { pieces: 64 }, ANIMATE_DELAY*2);
             
             $('#completionContainer').fadeOut(ANIMATE_DELAY/2);
@@ -222,6 +232,10 @@
           hideWindow : hideWindow,
           showCompletionPopup: showCompletionPopup
       };
+    
+        function getGame(){
+            return global.game;
+        }
 
     })(window);
 
@@ -232,13 +246,31 @@
         
     };
     
-    function completionLevel(task){
+    function completionResults(task){
+        level = ++level === 4 ? (level =1) : level;
+        var image = 'thumbs-up.jpg';
+        
+        switch(level){
+            case 1: 
+                image = 'breaking-bad.gif';
+                break;
+            case 2:
+                image = 'winner-losersign.jpg';
+                break;
+            case 3:
+                image = 'winner-number-1.jpg';
+                break;
+        }
+        
         // cycle between levels
-        return ++level === 4 ? (level =1) : level;
+        return {
+            level : level,
+            image : image
+        };
     };
     global.game = {
         init : init,
-        completionLevel : completionLevel       
+        completionResults : completionResults       
         
     };
     

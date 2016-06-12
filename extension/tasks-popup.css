@@ -12,7 +12,7 @@ body
 #popup.tasks-popup
 {
     z-index: 9999;
-		 display: none;
+    display: none;
 		position: fixed;
 		bottom: 10px;
 		right: 20px;
@@ -40,6 +40,28 @@ i:hover{
 /*    pointer-events: none;*/
 }
 
+.hint-popup #close{
+    color: rgba(53, 53, 53, 0.86);
+    float:right;
+    margin: 2px;
+}
+
+#hintWindow .image-container > img{
+    border: 10px;
+    border-color: rgba(0, 0, 0, 0.19);
+    border-style: solid;
+    border-radius: 8px;
+    height: 350px;
+    width: 450px;
+}
+
+#completionWindow{
+    background: rgba(3, 155, 229, 0.71);
+/*    background: rgba(100, 117, 156, 0.64);*/
+    border-radius: 10px;
+    padding-right: 6px;
+    padding-left: 6px;
+}
 .completion-popup{
     top: 20%;
 /*    display: none;   */
@@ -48,13 +70,33 @@ i:hover{
     z-index: 9999;    
 }
 
+.completion-popup #close{
+    color: orange;
+    float:right;
+    margin: 2px;
+}
 .image-container {
     padding: 10px;
 }
 
-.image-container > img{
-    border-radius: 8px;
+#completionWindow .image-container > img{
+    border-radius: 10px;
     border: 2px grey black;
+    width: 350px;
+    height: 250px;
+}
+.stars-container{
+    align-content: center;
+    margin: 3px;
+    padding: 5px;    
+    text-align: center;
+    
+}
+.stars-container > i{
+    
+}
+.star-won{
+    color: goldenrod;
 }
 .background-blur{
 /*    display: none;*/
