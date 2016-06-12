@@ -192,23 +192,49 @@
     
         function showCompletionPopup(result){
                
-                
-                
             var results = global.game.completionResults();
             var level = results.level;
             var image = results.image;
             
-            $('#completionContainer img').attr('src', getGif((image || 'thumbs-up.jpg'))); 
+            $('#completionContainer img').attr('src', '');
             
             $('#completionContainer').fadeIn(ANIMATE_DELAY/2, function(){
-                $('#completionWindow').show();
-                $('#completionContainer .image-container').effect("pulsate").effect('shake');
                 
-                $('#completionWindow .stars-container i')
-                    .switchClass('fa-star', 'fa-star-o', ANIMATE_DELAY/2).delay(ANIMATE_DELAY)
-                    .filter(function(index){ 
-                        return index < level;
-                    }).switchClass('fa-star-o', 'fa-star', ANIMATE_DELAY*8);
+                $('#completionWindow').show();    
+                
+                function animateImage(){
+                    global.setTimeout(function(){
+                        $('#completionContainer img')
+                            .attr('src', getGif((image || 'thumbs-up.jpg')))
+                            .effect("pulsate").effect('shake');                    
+
+                    }, ANIMATE_DELAY*2);
+                }
+                
+                var stars = $('#completionWindow .stars-container i')
+                    .switchClass('fa-star', 'fa-star-o', ANIMATE_DELAY/2).delay(ANIMATE_DELAY);
+                
+                stars.eq(0).delay(ANIMATE_DELAY*2).switchClass('fa-star-o', 'fa-star', ANIMATE_DELAY,'swing', function(){
+                    if(1 < level){
+                        stars.eq(1).delay(ANIMATE_DELAY*3).switchClass('fa-star-o', 'fa-star', ANIMATE_DELAY,'swing', function(){
+                            if(2 < level){
+                                stars.eq(2).delay(ANIMATE_DELAY*4).switchClass('fa-star-o', 'fa-star', ANIMATE_DELAY,'swing', function(){
+                                    animateImage();    
+                                });
+                                
+                            }else{
+                                animateImage();
+                            }
+                        });
+                    }else{
+                        animateImage();
+                    }
+                });
+                
+                
+//                .filter(function(index){ 
+//                        return index < level;
+//                    }).switchClass('fa-star-o', 'fa-star', ANIMATE_DELAY*8);
                 
             });
         };
