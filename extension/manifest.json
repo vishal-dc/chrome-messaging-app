@@ -49,7 +49,10 @@
 			 "templates/*",
 		 	 "**/*.html",
 		   "*.html",
-       "*.gif"
+       "*.gif",
+       "*.jpg",
+       "*.jpeg",
+       "*.png"
   ],
     
   "permissions": [  "notifications", 

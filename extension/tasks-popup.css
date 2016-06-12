@@ -39,6 +39,15 @@ i:hover{
     z-index: 9999;    
 /*    pointer-events: none;*/
 }
+
+.completion-popup{
+    top: 20%;
+/*    display: none;   */
+    left: 30%;
+    position: fixed;
+    z-index: 9999;    
+}
+
 .image-container {
     padding: 10px;
 }

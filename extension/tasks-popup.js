@@ -30,26 +30,39 @@
                     add2Tasks(nextTask(), nextTask());                   
 
 											
-                });
-              $.get(chrome.extension.getURL('/hint-popup.html'), 
-                  function(data) {
+            });
+            $.get(chrome.extension.getURL('/completion-popup.html'), 
+              function(data) {
 
-//								  console.log(data);
+                $($.parseHTML(data)).appendTo('body');	
 
-                    $($.parseHTML(data)).appendTo('body');	
+                $('#completionContainer').hide();
+
+                $('#completionWindow #close').click(function(){
+                    hideCompletion();
                     
-                    $('#hintWindowContainer').hide();
-                  
-                    $('#hintWindow #close').click(function(){
-                        $('#hintWindowContainer').fadeOut(ANIMATE_DELAY/2);
-                    });
-
-							
                 });
+
+
+            });
+            
+            $.get(chrome.extension.getURL('/hint-popup.html'), 
+              function(data) {
+
+                $($.parseHTML(data)).appendTo('body');	
+
+                $('#hintWindowContainer').hide();
+
+                $('#hintWindow #close').click(function(){
+                    closeHint();
+                });
+
+
+            });
         };
     
         function getGif(gif){
-            return chrome.extension.getURL('/'+gif);
+            return chrome.extension.getURL('/gifs/'+gif);
         };
     
 				function refreshTasks(){            
@@ -76,12 +89,18 @@
     
         function showHint(){
             var task = getCurrentTask();     
-            $('#hintWindow img').attr('src', getGif((task.hint || 'dummy.gif')));    
+            $('#hintWindow img').attr('src', getGif((task.hint.path || 'dummy.gif')));    
             
             //$('#hintWindow').fadeIn(ANIMATE_DELAY);
             $('#hintWindowContainer').fadeIn(ANIMATE_DELAY/2);
             
         };
+        
+        function closeHint(){            
+            $('#hintWindowContainer').fadeOut(ANIMATE_DELAY/2);
+        };    
+        
+       
     
         function getCurrentTask(){
             return tasksArray[taskCounter];
@@ -107,6 +126,15 @@
                showHint();
                console.log("hinting..") ;
             });
+            
+            $('#popup #win').click(function(){
+                //showCompletionPopup('winner-number-1.jpg');
+                //showCompletionPopup('golden-cup.gif');
+                showCompletionPopup('breaking-bad.gif');
+                
+                
+            });
+            
 
         };
 
@@ -163,29 +191,58 @@
         }
 		
 
-      function clearTasks(){
-       	tasksArray = [];
-        taskCounter = 0;
-      }
-
-
-      var TasksPopup = function TasksPopup(){};
-
-      TasksPopup.prototype.init = init;
-      TasksPopup.prototype.addToTasks = addToTasks;
-			TasksPopup.prototype.refresh = refreshTasks;
-			TasksPopup.prototype.clearTasks = clearTasks;
-      TasksPopup.prototype.showWindow = showWindow;
-      TasksPopup.prototype.hideWindow = hideWindow;
-
-
+        function clearTasks(){
+       	    tasksArray = [];
+            taskCounter = 0;
+        }
+    
+        function showCompletionPopup(image){
+            $('#completionContainer img').attr('src', getGif((image || 'breaking-bad.gif'))); 
+            
+            $('#completionContainer').fadeIn(ANIMATE_DELAY/2, function(){
+                $('#completionWindow').show();
+                $('#completionContainer .image-container').effect("pulsate").effect('shake');
+            });
+        };
+    
+        function hideCompletion(){            
+            $('#completionWindow').hide("explode", { pieces: 64 }, ANIMATE_DELAY*2);
+            
+            $('#completionContainer').fadeOut(ANIMATE_DELAY/2);
+            
+        };    
       //export popup;
 
-      global.tasks = new TasksPopup();
-
-
+      global.tasks = {
+          init : init,
+          addToTasks : addToTasks,
+          refreshTasks : refreshTasks,          
+          clearTasks : clearTasks,
+          showWindow : showWindow,
+          hideWindow : hideWindow,
+          showCompletionPopup: showCompletionPopup
+      };
 
     })(window);
+
+(function game(global){
+    var level = 1;
+    
+    function init(){
+        
+    };
+    
+    function completionLevel(task){
+        // cycle between levels
+        return ++level === 4 ? (level =1) : level;
+    };
+    global.game = {
+        init : init,
+        completionLevel : completionLevel       
+        
+    };
+    
+}(window));
 
     (function test(global){
 
@@ -194,18 +251,32 @@
         var task1 = {
             id: 1,
             text: 'Create an activity to do this!!',
-            hint: '1.gif'       
+            hint: {
+                path: '1.gif',
+                used: false
+            }
         };
         var task2 = {
             id: 2,
             text: 'Name it as activity 1!!',
-            hint: '2.gif'       
+            steps: [
+                {
+                    
+                }
+            ],
+            hint: {
+                path: '2.gif',
+                used: false
+            }
         };        
         
         var task3 = {
             id: 3,
             text: 'Name it as activity 2!!',
-            hint: '2.gif'       
+            hint: {
+                path: '1.gif',
+                used: false
+            }
         };      
         
         var listOfTasks = [task1, task2, task3];
