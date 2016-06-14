@@ -161,7 +161,7 @@
                     restoreButtons();
                 });
             }
-        }
+        };
 
         function hideWindow(){
             $('#popup .card').hide(ANIMATE_DELAY, function(){
@@ -182,6 +182,17 @@
         function add2Tasks(task1, task2){
 
             var div = $('#popup');
+            
+//            if(task1){
+//                
+//              $('#popup #cards .first-card p').text(task1.text);
+//              
+//            }
+//            
+//            if(task2){
+//               $('#popup #cards .second-card p').text(task2.text);
+//               
+//            }
             if(task1){
                 var card1Div = $('<div class="card first-card"><p class="light">'+task1.text+'</p></div>');
                 div.append(card1Div);
@@ -239,11 +250,13 @@
                         animateImage();
                     }
                 });
+            });
         };
 
         function currentTaskIndex(){
             return taskCounter;
-        }
+        };
+            
         function hideCompletion(){     
             $('#completionWindow').hide("explode", { pieces: 64 }, ANIMATE_DELAY*2);
             
@@ -251,8 +264,8 @@
             
         };  
         function addLessonTitle(title){
-            $('#popup #lesson .title').text(title);
-        }
+            $('#popup #lesson').text(title);
+        };
       //export popup;
 
       global.tasks = {
@@ -268,36 +281,46 @@
           currentTaskIndex : currentTaskIndex
       };
     
-        function getGame(){
-            return global.game;
-        }
-
-    })(window);
+})(window);
 
 (function game(global){
     var level = 1;
     var lesson;
     var intervalId;
-    
+    var verifiers = {
+        // list of functions
+    };
+    var tasks ;
+    var checkInterval = 1000;
     function init(lesson){
+        tasks = global.tasks;
         addLesson(lesson);
+        verifiers.xpath = function(params, counter){
+              // verify xpath presence in dom
+            console.log("Verifying xpath");
+            console.log("Params: ", params);
+            console.log("Counter: ", counter);
+            return counter >= 5 ? true: false;
+        }
     };
     
     function stopVerify(){
         window.clearInterval(intervalId);
     }
-    
-    function startLesson(lesson){
-        var tasks = global.tasks;
+ 
+ 
+    function startLesson(){
+        
         //tasks.hideWindow();
         tasks.clearTasks();
-        tasks.addLessonTitle(lesson.title);
+       
         tasks.addToTasks(lesson.steps);
         tasks.init();
         setTimeout(function(){
+            tasks.addLessonTitle(lesson.title);
             tasks.showWindow(); // for tasks popups steps in less = tasks;
             startVerify();
-        },1000);
+        }, checkInterval);
         
         
         // start verification
@@ -305,15 +328,16 @@
     }
     function startVerify(){
         var step = tasks.currentTask();
+        var counter = 0;   
         var length = lesson.steps.length;
         intervalId = setInterval(function(){
-            var counter = 0;
+           
             console.log("interval Id: ", intervalId);
             console.log('Checking....');
-            if(tasks.currentTaskIndex < length){
-                 if(step.verify(step.params, counter)){
+            if(tasks.currentTaskIndex() < length){
+                if(verifiers[step.verify](step.params, counter)){
                     counter = 0;
-                    refreshTasks();
+                    tasks.refreshTasks();
                 }else{
                     counter++;
                 }
@@ -325,23 +349,20 @@
                 tasks.showCompletionPopup(result);
             }
            
-        }, 1000);
+        }, checkInterval);
         
     };
     
-    function doVerify(step, counter){
-        
-    };
-    
-    function addLesson(lesson){
-        lesson = lesson;
+
+    function addLesson(param){
+        lesson = param;
         lesson =  {
             id: 1,
             title: 'Mastering the workflow execution!',
             steps: [
                 {
                     text: 'Open Personal Worklist',
-                    verify: 'xpathVerifier',
+                    verify: 'xpath',
                     params: [
                         'worklistXpath'
                     ], 
@@ -354,7 +375,7 @@
                 },
                 {
                     text: 'Start Gamer Process',
-                    verify: 'xpathVerifier',
+                    verify: 'xpath',
                     params: [
                         'startedProcessXpath'
                     ], 
@@ -367,7 +388,7 @@
                 },
                 {
                     text: 'Open Activiy Process',
-                    verify: 'xpathVerifier',
+                    verify: 'xpath',
                     params: [
                         'startedProcessXpath'
                     ], 
@@ -405,17 +426,11 @@
             image : image
         };
     };
-       //return boolean
-    function xpathVerifier(xpath, counter)   {
-        // verify xpath presence in dom
-        console.log("Verifying xpath");
-        counter===5 ? true: false;
-        
-    };
-    
+
     global.game = {
         init : init,
-        completionResults : completionResults       
+        completionResults : completionResults,
+        startLesson : startLesson
         
     };
     
@@ -425,6 +440,7 @@
 
 (function test(global){
     global.game.init();
+    global.game.startLesson();
 })(window);// top IIFE
 
 
